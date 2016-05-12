@@ -2,12 +2,12 @@
 <extension version="3.0" type="plugin" group="j2xml" method="upgrade">
   <name>PLG_J2XML_ANAC</name>
   <author>Helios Ciancio</author>
-  <creationDate>January 2016</creationDate>
+  <creationDate>May 2016</creationDate>
   <copyright>(C) 2016, Helios Ciancio. All rights reserved.</copyright>
   <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3</license>
   <authorEmail>info@eshiol.it</authorEmail>
   <authorUrl>www.eshiol.it</authorUrl>
-  <version>3.0.2.26</version>
+  <version>3.0.3.27</version>
   <description>PLG_J2XML_ANAC_XML_DESCRIPTION</description>
   <scriptfile>enable.php</scriptfile>
   <updateservers>
@@ -17,13 +17,8 @@
     <filename plugin="anac">anac.php</filename>
     <filename>anac.xsl</filename>
     <filename>index.html</filename>
+    <folder>language</folder>
   </files>
-  <languages folder="language">
-    <language tag="en-GB">en-GB/en-GB.plg_j2xml_anac.ini</language>
-    <language tag="en-GB">en-GB/en-GB.plg_j2xml_anac.sys.ini</language>
-    <language tag="it-IT">it-IT/it-IT.plg_j2xml_anac.ini</language>
-    <language tag="it-IT">it-IT/it-IT.plg_j2xml_anac.sys.ini</language>
-  </languages>
   <config>
     <fields name="params">
       <fieldset name="basic">
