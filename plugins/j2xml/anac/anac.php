@@ -1,10 +1,9 @@
 <?php
 /**
- * @version		3.0.2 plugins/j2xml/anac/anac.php
+ * @version		3.0.3 plugins/j2xml/anac/anac.php
  * 
  * @package		J2XML
  * @subpackage	plg_j2xml_anac
- * @since		3.1
  *
  * @author		Helios Ciancio <info@eshiol.it>
  * @link		http://www.eshiol.it
@@ -107,12 +106,22 @@ class plgJ2XMLAnac extends JPlugin
 		$xslfile = new DOMDocument();
 		//$xslfile->load(JPATH_ROOT.'/plugins/j2xml/anac/anac.xsl');
 		$xsl = file_get_contents(JPATH_ROOT.'/plugins/j2xml/anac/anac.xsl');
-		$title = $this->params->get('title', 'abstract');
-		if ($title != 'abstract')
+		$title = $this->params->get('title', 'year');
+		if ($title == 'year')
 		{
 			$xsl = str_replace(
 				'<title><xsl:value-of select="/legge190:pubblicazione/metadata/abstract"/></title>',
-				'<title><xsl:value-of select="/legge190:pubblicazione/metadata/'.$title.'"/></title>',
+				'<title><xsl:value-of select="/legge190:pubblicazione/metadata/titolo"/>'
+					.' anno rif. '
+					.'<xsl:value-of select="/legge190:pubblicazione/metadata/annoRiferimento"/></title>',
+				$xsl
+				);
+		}
+		elseif ($title == 'title')
+		{
+			$xsl = str_replace(
+				'<title><xsl:value-of select="/legge190:pubblicazione/metadata/abstract"/></title>',
+				'<title><xsl:value-of select="/legge190:pubblicazione/metadata/titolo"/></title>',
 				$xsl
 				);
 		}
@@ -130,9 +139,11 @@ class plgJ2XMLAnac extends JPlugin
 				);
 		}
 		$catid = $this->params->get('category_id', 2);
+		JLog::add(new JLogEntry('catid: '.$catid,JLOG::DEBUG,'plg_j2xml_anac'));
 		$categoryTable = JTable::getInstance('Category');
 		$categoryTable->load($catid);
-		str_replace(
+		JLog::add(new JLogEntry('category: '.$categoryTable->path,JLOG::DEBUG,'plg_j2xml_anac'));
+		$xsl = str_replace(
 			'<catid>uncategorised</catid>',
 			'<catid>'.$categoryTable->path.'</catid>',
 			$xsl
