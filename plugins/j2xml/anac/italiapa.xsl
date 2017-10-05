@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 /** 
- * @version		3.0.4 plugins/j2xml/anac/anac.xsl
+ * @version		3.7.7 plugins/j2xml/anac/italiapa.xsl
  * 
  * @package		J2XML
  * @subpackage	plg_j2xml_anac
- * @since		3.0
+ * @since		3.7.7
  *
  * @author		Helios Ciancio <info@eshiol.it>
  * @link		http://www.eshiol.it
- * @copyright	Copyright (C) 2016 Helios Ciancio. All Rights Reserved
+ * @copyright	Copyright (C) 2016, 2017 Helios Ciancio. All Rights Reserved
  * @license		http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3
  * J2XML is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -36,22 +36,22 @@
 	<catid>uncategorised</catid>
 	<alias><xsl:call-template name="normalize-alias"><xsl:with-param name="s" select="/legge190:pubblicazione/metadata/abstract"></xsl:with-param></xsl:call-template></alias>
 	<introtext>
-&lt;div id="anac_toc">
-&lt;table>
-&lt;thead>&lt;tr>
-&lt;th class="anac_toc_oggetto">Oggetto&lt;/th>
-&lt;th class="anac_toc_cig">CIG&lt;/th>
-&lt;th class="anac_toc_importo">Importo agg.&lt;/th>
-&lt;th class="anac_toc_durata">Durata lavori&lt;/th>
-&lt;th class="anac_toc_modalita">Modalita affidamento&lt;/th>
+&lt;div>
+&lt;table class="Table Table--striped Table--hover Table--withBorder Accordion Accordion--default fr-accordion js-fr-accordion" id="accordion-<xsl:value-of select='generate-id(.)'/>">
+&lt;thead>&lt;tr class="u-border-bottom-xs">
+&lt;th class="u-textCenter">Oggetto&lt;/th>
+&lt;th class="u-textCenter">CIG&lt;/th>
+&lt;th class="u-textCenter">Importo agg.&lt;/th>
+&lt;th class="u-textCenter">Durata lavori&lt;/th>
+&lt;th class="u-textCenter">Modalita affidamento&lt;/th>
+&lt;th>&lt;/th>
 &lt;/tr>
 &lt;/thead>
 &lt;tbody>
-<xsl:apply-templates select="/legge190:pubblicazione/data/lotto" mode="toc"/>
+<xsl:apply-templates select="/legge190:pubblicazione/data/lotto"/>
 &lt;/tbody>
 &lt;/table>
 &lt;/div>
-<xsl:apply-templates select="/legge190:pubblicazione/data/lotto" mode="content"/>
 	</introtext>
 	<fulltext/>
 	<state>0</state>
@@ -81,97 +81,57 @@
 </j2xml>
 </xsl:template>
 
-<xsl:template match="lotto" mode="toc">
+<xsl:template match="lotto">
 &lt;tr>
-	&lt;td class="anac_toc_oggetto">&lt;a href="#" onclick="jQuery('#anac_toc').hide();jQuery('#anac_<xsl:value-of select='generate-id(.)'/>').show();">
-	<xsl:value-of select="oggetto"/>&lt;/a>&lt;/td>
-	&lt;td class="anac_toc_cig"><xsl:value-of select="cig"/>&lt;/td>
-	&lt;td class="anac_toc_importo"><xsl:value-of select="importoAggiudicazione"/>&lt;/td>
-	&lt;td class="anac_toc_durata">
-		<xsl:value-of select="tempiCompletamento/dataInizio"/> - <xsl:value-of select="tempiCompletamento/dataUltimazione"/>
+	&lt;td><xsl:value-of select="oggetto"/>&lt;/td>
+	&lt;td><xsl:value-of select="cig"/>&lt;/td>
+	&lt;td><xsl:value-of select="importoAggiudicazione"/>&lt;/td>
+	&lt;td>
+		<xsl:value-of select="tempiCompletamento/dataInizio"/><xsl:text> </xsl:text><xsl:value-of select="tempiCompletamento/dataUltimazione"/>
 	&lt;/td>
-	&lt;td class="anac_toc_modalita"><xsl:value-of select="sceltaContraente"/>&lt;/td>
+	&lt;td><xsl:value-of select="sceltaContraente"/>&lt;/td>
+	&lt;td>&lt;h2 class="Accordion-header js-fr-accordion__header fr-accordion__header" id="accordion-header-<xsl:value-of select='generate-id(.)'/>">&lt;/h2>&lt;/td>
 &lt;/tr>
-</xsl:template>
+&lt;tr>
+	&lt;td colspan="6" style="padding:0!important;">
+		&lt;div class="Accordion-panel fr-accordion__panel js-fr-accordion__panel" id="accordion-panel-<xsl:value-of select='generate-id(.)'/>">
+			&lt;table>
+				&lt;tr>&lt;td>CIG&lt;/td>&lt;td><xsl:value-of select='cig'/>&lt;/td>&lt;/tr>
+				&lt;tr>&lt;td>Struttura proponente&lt;/td>&lt;td><xsl:value-of select='strutturaProponente/denominazione'/> - CF: <xsl:value-of select='strutturaProponente/codiceFiscaleProp'/>&lt;/td>&lt;/tr>
+				&lt;tr>&lt;td>Oggetto del bando&lt;/td>&lt;td><xsl:value-of select='oggetto'/>&lt;/td>&lt;/tr>
+				&lt;tr>&lt;td>Procedura di scelta del contraente&lt;/td>&lt;td><xsl:value-of select='sceltaContraente'/>&lt;/td>&lt;/tr>
+				&lt;tr>&lt;td>Importo di aggiudicazione&lt;/td>&lt;td><xsl:value-of select='importoAggiudicazione'/>&lt;/td>&lt;/tr>
+				&lt;tr>&lt;td>Data di effettivo inizio&lt;/td>&lt;td><xsl:value-of select='tempiCompletamento/dataInizio'/>&lt;/td>&lt;/tr>
+				&lt;tr>&lt;td>Data di ultimazione&lt;/td>&lt;td><xsl:value-of select='tempiCompletamento/dataUltimazione'/>&lt;/td>&lt;/tr>
+				&lt;tr>&lt;td>Importo delle somme liquidate&lt;/td>&lt;td><xsl:value-of select='importoSommeLiquidate'/>&lt;/td>&lt;/tr>	
 
-<xsl:template match="lotto" mode="content">
-&lt;div class="anac_content" style="display:none" id="anac_<xsl:value-of select='generate-id(.)'/>">
-&lt;a href="#" onclick="jQuery('#anac_toc').show();jQuery('#anac_<xsl:value-of select='generate-id(.)'/>').hide();">Chiudi&lt;/a>
-&lt;table>
-&lt;tr>
-	&lt;td class="anac_content_title">CIG&lt;/td>
-	&lt;td class="anac_content_value"><xsl:value-of select="cig"/>&lt;/td>
-&lt;/tr>
-&lt;tr>
-	&lt;td class="anac_content_title">Struttura proponente&lt;/td>
-	&lt;td class="anac_content_value">
-		<xsl:value-of select="strutturaProponente/denominazione"/>&lt;br/>
-		<xsl:value-of select="strutturaProponente/codiceFiscaleProp"/>
-	&lt;/td>
-&lt;/tr>
-&lt;tr>
-	&lt;td class="anac_content_title">Oggetto del bando&lt;/td>
-	&lt;td class="anac_content_value">
-		<xsl:value-of select="oggetto"/>
-	&lt;/td>
-&lt;/tr>
-&lt;tr>
-	&lt;td class="anac_content_title">Procedura di scelta del contraente&lt;/td>
-	&lt;td class="anac_content_value">
-		<xsl:value-of select="sceltaContraente"/>
-	&lt;/td>
-&lt;/tr>
-&lt;tr>
-	&lt;td class="anac_content_title">Importo di aggiudicazione&lt;/td>
-	&lt;td class="anac_content_value">
-		<xsl:value-of select="importoAggiudicazione"/>
-	&lt;/td>
-&lt;/tr>
-&lt;tr>
-	&lt;td class="anac_content_title">Data di effettivo inizio&lt;/td>
-	&lt;td class="anac_content_value">
-		<xsl:value-of select="tempiCompletamento/dataInizio"/>
-	&lt;/td>
-&lt;/tr>
-&lt;tr>
-	&lt;td class="anac_content_title">Data di ultimazione&lt;/td>
-	&lt;td class="anac_content_value">
-		<xsl:value-of select="tempiCompletamento/dataUltimazione"/>
-	&lt;/td>
-&lt;/tr>
-&lt;tr>
-	&lt;td class="anac_content_title">Importo delle somme liquidate&lt;/td>
-	&lt;td class="anac_content_value">
-		<xsl:value-of select="importoSommeLiquidate"/>
-	&lt;/td>
-&lt;/tr>
-&lt;/table>
+				<xsl:if test="count(partecipanti/partecipante) &gt; 0">
+				&lt;tr>
+					&lt;td rowspan="<xsl:value-of select="count(partecipanti/partecipante)"/>">Partecipanti&lt;/td>
+				<xsl:for-each select="partecipanti/partecipante">
+					<xsl:if test="position() &gt; 1">
+					&lt;tr>
+					</xsl:if>			
+					&lt;td><xsl:value-of select="ragioneSociale"/> - CF: <xsl:value-of select="codiceFiscale"/>&lt;/td>
+				&lt;/tr>
+				</xsl:for-each>
+				</xsl:if>
 
-<xsl:if test="count(partecipanti/partecipante) &gt; 0">
-&lt;table class="anac_content_partecipanti">
-&lt;caption>Partecipanti&lt;/caption>
-<xsl:for-each select="partecipanti/partecipante">
-&lt;tr>
-	&lt;td class="anac_content_ragioneSociale"><xsl:value-of select="ragioneSociale"/>&lt;/td>
-	&lt;td class="anac_content_codiceFiscale"><xsl:value-of select="codiceFiscale"/>&lt;/td>
+				<xsl:if test="count(aggiudicatari/aggiudicatario) &gt; 0">
+				&lt;tr>
+					&lt;td rowspan="<xsl:value-of select="count(aggiudicatari/aggiudicatario)"/>">Aggiudicatari&lt;/td>
+				<xsl:for-each select="aggiudicatari/aggiudicatario">
+					<xsl:if test="position() &gt; 1">
+					&lt;tr>
+					</xsl:if>			
+					&lt;td><xsl:value-of select="ragioneSociale"/> - CF: <xsl:value-of select="codiceFiscale"/>&lt;/td>
+				&lt;/tr>
+				</xsl:for-each>
+				</xsl:if>
+			&lt;/table>
+		&lt;/div>
+	&lt;/td>
 &lt;/tr>
-</xsl:for-each>
-&lt;/table>
-</xsl:if>
-
-<xsl:if test="count(aggiudicatari/aggiudicatario) &gt; 0">
-&lt;table class="anac_content_aggiudicatari">
-&lt;caption>Aggiudicatari&lt;/caption>
-<xsl:for-each select="aggiudicatari/aggiudicatario">
-&lt;tr>
-	&lt;td class="anac_content_ragioneSociale"><xsl:value-of select="ragioneSociale"/>&lt;/td>
-	&lt;td class="anac_content_codiceFiscale"><xsl:value-of select="codiceFiscale"/>&lt;/td>
-&lt;/tr>
-</xsl:for-each>
-&lt;/table>
-</xsl:if>
-&lt;a href="#" onclick="jQuery('#anac_toc').show();jQuery('#anac_<xsl:value-of select='generate-id(.)'/>').hide();">Chiudi&lt;/a>
-&lt;/div>
 </xsl:template>
 
 <xsl:variable name="lowercase" select="'abcdefghijklmnopqrstuvwxyz '" />

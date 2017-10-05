@@ -1,13 +1,13 @@
 <?php
 /**
- * @version		3.0.3 plugins/j2xml/anac/anac.php
+ * @version		3.7.7 plugins/j2xml/anac/anac.php
  * 
  * @package		J2XML
  * @subpackage	plg_j2xml_anac
  *
  * @author		Helios Ciancio <info@eshiol.it>
  * @link		http://www.eshiol.it
- * @copyright	Copyright (C) 2016 Helios Ciancio. All Rights Reserved
+ * @copyright	Copyright (C) 2016, 2017 Helios Ciancio. All Rights Reserved
  * @license		http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3
  * J2XML is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -25,43 +25,44 @@ jimport('joomla.application.component.helper');
 jimport('joomla.filesystem.file');
 jimport('eshiol.j2xml.version');
 
-class plgJ2XMLAnac extends JPlugin
+class plgJ2xmlAnac extends JPlugin
 {
-	var $_params = null;
 	/**
-	 * CONSTRUCTOR
-	 * @param object $subject The object to observe
-	 * @param object $config  The object that holds the plugin parameters
+	 * Load the language file on instantiation.
+	 *
+	 * @var    boolean
+	 */
+	protected $autoloadLanguage = true;
+
+	/**
+	 * Constructor
+	 *
+	 * @param  object  $subject  The object to observe
+	 * @param  array   $config   An array that holds the plugin configuration
 	 */
 	function __construct(&$subject, $config)
 	{
-		parent::__construct($subject, $config);		
+		parent::__construct($subject, $config);
 
-		// Get the parameters.
-		// TODO: merge $this->params and $config['params']
-		if (isset($config['params']))
+		if ($this->params->get('debug') || defined('JDEBUG') && JDEBUG)
 		{
-			if ($config['params'] instanceof Registry)
+			JLog::addLogger(array('text_file' => $this->params->get('log', 'eshiol.log.php'), 'extension' => 'plg_j2xml_anac_file'), JLog::ALL, array('plg_j2xml_anac'));
+		}
+		if (PHP_SAPI == 'cli')
+		{
+			JLog::addLogger(array('logger' => 'echo', 'extension' => 'plg_j2xml_anac'), JLOG::ALL & ~JLOG::DEBUG, array('plg_j2xml_anac'));
+		}
+		else
+		{
+			JLog::addLogger(array('logger' => (null !== $this->params->get('logger')) ?$this->params->get('logger') : 'messagequeue', 'extension' => 'plg_j2xml_anac'), JLOG::ALL & ~JLOG::DEBUG, array('plg_j2xml_anac'));
+			if ($this->params->get('phpconsole') && class_exists('JLogLoggerPhpconsole'))
 			{
-				$this->_params = $config['params'];
-			}
-			else
-			{
-				$this->_params = (version_compare(JPlatform::RELEASE, '12', 'ge') ? new Registry : new JRegistry);
-				$this->_params->loadString($config['params']);
+				JLog::addLogger(['logger' => 'phpconsole', 'extension' => 'plg_j2xml_anac_phpconsole'],  JLOG::DEBUG, array('plg_j2xml_anac'));
 			}
 		}
-		
-		$lang = JFactory::getLanguage();
-		$lang->load('plg_j2xml_anac', JPATH_SITE, null, false, false)
-			|| $lang->load('plg_j2xml_anac', JPATH_ADMINISTRATOR, null, false, false)
-			|| $lang->load('plg_j2xml_anac', JPATH_SITE, null, true)
-			|| $lang->load('plg_j2xml_anac', JPATH_ADMINISTRATOR, null, true);	
-
-		JLog::addLogger(array('text_file' => 'j2xml.php', 'extension' => 'plg_j2xml_anac'), JLog::ALL, array('plg_j2xml_anac'));
-		JLog::addLogger(array('logger' => 'messagequeue', 'extension' => 'plg_j2xml_anac'), JLOG::ALL & ~JLOG::DEBUG, array('plg_j2xml_anac'));
+		JLog::add(new JLogEntry(__METHOD__, JLog::DEBUG, 'plg_j2xml_anac'));
 	}
-
+	
 	/**
 	 * Method is called by 
 	 *
@@ -69,26 +70,33 @@ class plgJ2XMLAnac extends JPlugin
 	 */
 	public function onBeforeImport($context, &$xml)
 	{
-		JLog::add(new JLogEntry(__METHOD__,JLOG::DEBUG,'plg_j2xml_anac'));
-		JLog::add(new JLogEntry($context,JLOG::DEBUG,'plg_j2xml_anac'));
-		JLog::add(new JLogEntry(print_r($this->_params, true),JLOG::DEBUG,'plg_j2xml_anac'));
-		
+		JLog::add(new JLogEntry(__METHOD__, JLog::DEBUG, 'plg_j2xml_anac'));
+		JLog::add(new JLogEntry($context, JLOG::DEBUG, 'plg_j2xml_anac'));
+		JLog::add(new JLogEntry(print_r($this->params, true), JLOG::DEBUG, 'plg_j2xml_anac'));
+
 		if (get_class($xml) != 'SimpleXMLElement')
 			return false;
 
 		$error = false;
 		if (!class_exists('XSLTProcessor'))
 		{
-			JLog::add(new JLogEntry(JText::_('PLG_J2XML_ANAC').' '.JText::_('PLG_J2XML_ANAC_MSG_REQUIREMENTS_XSL')),JLOG::WARNING,'plg_j2xml_anac');
-			$error = true;
-		}
-		
-		if (version_compare(J2XMLVersion::getShortVersion(), '13.8.3') == -1)
-		{
-			JLog::add(new JLogEntry(JText::_('PLG_J2XML_ANAC').' '.JText::_('PLG_J2XML_ANAC_MSG_REQUIREMENTS_LIB')),JLOG::WARNING,'plg_j2xml_anac');
+			JLog::add(new JLogEntry(JText::_('PLG_J2XML_ANAC').' '.JText::_('PLG_J2XML_ANAC_MSG_REQUIREMENTS_XSL'), JLog::WARNING, 'plg_j2xml_anac'));
 			$error = true;
 		}
 
+		if (version_compare(J2XMLVersion::getShortVersion(), '13.8.3') == -1)
+		{
+			JLog::add(new JLogEntry(JText::_('PLG_J2XML_ANAC').' '.JText::_('PLG_J2XML_ANAC_MSG_REQUIREMENTS_LIB'), JLog::WARNING, 'plg_j2xml_anac'));
+			$error = true;
+		}
+
+		// Check if Joomla Extension plugin is enabled.
+		if (JPluginHelper::isEnabled('content', 'htmlpurifier'))
+		{
+			JLog::add(new JLogEntry(JText::_('PLG_J2XML_ANAC').' '.JText::_('PLG_J2XML_ANAC_MSG_REQUIREMENTS_PLG_CONTENT_HTMLPURIFIER'), JLog::WARNING, 'plg_j2xml_anac'));
+			$error = true;
+		}
+		
 		if ($error) return false;
 		$namespaces = $xml->getNamespaces(true);
 		if (isset($namespaces['legge190']))
@@ -105,7 +113,7 @@ class plgJ2XMLAnac extends JPlugin
 		$xslt = new XSLTProcessor();
 		$xslfile = new DOMDocument();
 		//$xslfile->load(JPATH_ROOT.'/plugins/j2xml/anac/anac.xsl');
-		$xsl = file_get_contents(JPATH_ROOT.'/plugins/j2xml/anac/anac.xsl');
+		$xsl = file_get_contents(JPATH_ROOT.'/plugins/j2xml/anac/'.$this->params->get('xsl', 'anac.xsl'));
 		$title = $this->params->get('title', 'year');
 		if ($title == 'year')
 		{
@@ -139,17 +147,17 @@ class plgJ2XMLAnac extends JPlugin
 				);
 		}
 		$catid = $this->params->get('category_id', 2);
-		JLog::add(new JLogEntry('catid: '.$catid,JLOG::DEBUG,'plg_j2xml_anac'));
+		JLog::add(new JLogEntry('catid: '.$catid, JLOG::DEBUG, 'plg_j2xml_anac'));
 		$categoryTable = JTable::getInstance('Category');
 		$categoryTable->load($catid);
-		JLog::add(new JLogEntry('category: '.$categoryTable->path,JLOG::DEBUG,'plg_j2xml_anac'));
+		JLog::add(new JLogEntry('category: '.$categoryTable->path, JLOG::DEBUG, 'plg_j2xml_anac'));
 		$xsl = str_replace(
 			'<catid>uncategorised</catid>',
 			'<catid>'.$categoryTable->path.'</catid>',
 			$xsl
 			);
-		JLog::add(new JLogEntry($xsl,JLOG::DEBUG,'plg_j2xml_anac'));
-		$xslfile->loadXML($xsl);		
+		JLog::add(new JLogEntry($xsl, JLOG::DEBUG, 'plg_j2xml_anac'));
+		$xslfile->loadXML($xsl);
 		$xslt->importStylesheet($xslfile);
 		$xml = $xslt->transformToXML($xml);
 		$xml = simplexml_load_string($xml);
