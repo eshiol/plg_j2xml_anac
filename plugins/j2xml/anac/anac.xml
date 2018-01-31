@@ -2,12 +2,12 @@
 <extension version="3.6" type="plugin" group="j2xml" method="upgrade">
   <name>plg_j2xml_anac</name>
   <author>Helios Ciancio</author>
-  <creationDate>October 2017</creationDate>
-  <copyright>(C) 2016, 2017 Helios Ciancio. All rights reserved.</copyright>
+  <creationDate>January 2018</creationDate>
+  <copyright>(C) 2016, 2018 Helios Ciancio. All rights reserved.</copyright>
   <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3</license>
   <authorEmail>info@eshiol.it</authorEmail>
   <authorUrl>www.eshiol.it</authorUrl>
-  <version>3.7.7.52</version>
+  <version>3.7.8.53</version>
   <description>PLG_J2XML_ANAC_XML_DESCRIPTION</description>
   <updateservers>
     <server type="extension" priority="2" name="ANAC Importer for J2XML">https://www.eshiol.it/files/plg_j2xml_anac/plg_j2xml_anac.xml</server>

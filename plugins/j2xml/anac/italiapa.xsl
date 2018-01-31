@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 /** 
- * @version		3.7.7 plugins/j2xml/anac/italiapa.xsl
+ * @version		3.7.8 plugins/j2xml/anac/italiapa.xsl
  * 
  * @package		J2XML
  * @subpackage	plg_j2xml_anac
@@ -93,7 +93,7 @@
 	&lt;td>&lt;h2 class="Accordion-header js-fr-accordion__header fr-accordion__header" id="accordion-header-<xsl:value-of select='generate-id(.)'/>">&lt;/h2>&lt;/td>
 &lt;/tr>
 &lt;tr>
-	&lt;td colspan="6" style="padding:0!important;">
+	&lt;td colspan="6" style="padding: 0 0 0 2em!important;">
 		&lt;div class="Accordion-panel fr-accordion__panel js-fr-accordion__panel" id="accordion-panel-<xsl:value-of select='generate-id(.)'/>">
 			&lt;table>
 				&lt;tr>&lt;td>CIG&lt;/td>&lt;td><xsl:value-of select='cig'/>&lt;/td>&lt;/tr>
