@@ -1,13 +1,13 @@
 <?php
 /**
- * @version		3.7.7 plugins/j2xml/anac/anac.php
+ * @version		3.8.1 plugins/j2xml/anac/anac.php
  * 
  * @package		J2XML
  * @subpackage	plg_j2xml_anac
  *
  * @author		Helios Ciancio <info@eshiol.it>
  * @link		http://www.eshiol.it
- * @copyright	Copyright (C) 2016, 2017 Helios Ciancio. All Rights Reserved
+ * @copyright	Copyright (C) 2016, 2018 Helios Ciancio. All Rights Reserved
  * @license		http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3
  * J2XML is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -156,6 +156,16 @@ class plgJ2xmlAnac extends JPlugin
 			'<catid>'.$categoryTable->path.'</catid>',
 			$xsl
 			);
+		$accordion = $this->params->get('accordion');
+		JLog::add(new JLogEntry('accordion: '.$accordion, JLOG::DEBUG, 'plg_j2xml_anac'));
+		if ($accordion)
+		{
+			$xsl = str_replace(
+				'Accordion Accordion--default',
+				$accordion,
+				$xsl
+				);
+		}
 		JLog::add(new JLogEntry($xsl, JLOG::DEBUG, 'plg_j2xml_anac'));
 		$xslfile->loadXML($xsl);
 		$xslt->importStylesheet($xslfile);

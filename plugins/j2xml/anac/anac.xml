@@ -37,6 +37,10 @@
           <option value="anac.xsl">PLG_J2XML_ANAC_XSL_ANAC</option>
           <option value="italiapa.xsl">PLG_J2XML_ANAC_XSL_ITALIAPA</option>
         </field>
+        <field name="accordion" type="list" label="PLG_J2XML_ANAC_ITALIAPASTYLE_LABEL" description="PLG_J2XML_ANAC_ITALIAPASTYLE_DESC" default="" showon="xsl:italiapa.xsl">
+          <option value="">PLG_J2XML_ANAC_ITALIAPASTYLE_DEFAULT</option>
+          <option value="Accordion Accordion--plus">PLG_J2XML_ANAC_ITALIAPASTYLE_PLUS</option>
+        </field>
       </fieldset>
       <fieldset name="debug" label="PLG_J2XML_ANAC_DEBUG_FIELDSET_LABEL">
         <field name="debug" type="radio" default="0" class="btn-group btn-group-yesno" description="PLG_J2XML_ANAC_DEBUG_SYSTEM_DESC" label="PLG_J2XML_ANAC_DEBUG_SYSTEM_LABEL">
