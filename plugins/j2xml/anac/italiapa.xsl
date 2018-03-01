@@ -90,7 +90,7 @@
 		<xsl:value-of select="tempiCompletamento/dataInizio"/><xsl:text> </xsl:text><xsl:value-of select="tempiCompletamento/dataUltimazione"/>
 	&lt;/td>
 	&lt;td><xsl:value-of select="sceltaContraente"/>&lt;/td>
-	&lt;td>&lt;h2 class="Accordion-header js-fr-accordion__header fr-accordion__header" id="accordion-header-<xsl:value-of select='generate-id(.)'/>">&lt;/h2>&lt;/td>
+	&lt;td>&lt;h2 class="Accordion-header js-fr-accordion__header fr-accordion__header" id="accordion-header-<xsl:value-of select='generate-id(.)'/>" aria-controls="accordion-panel-<xsl:value-of select='generate-id(.)'/>">&lt;/h2>&lt;/td>
 &lt;/tr>
 &lt;tr>
 	&lt;td colspan="6" style="padding: 0 0 0 2em!important;">
