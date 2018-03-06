@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 /** 
- * @version		3.7.8 plugins/j2xml/anac/italiapa.xsl
- * 
  * @package		J2XML
  * @subpackage	plg_j2xml_anac
+ * 
+ * @version		3.8.1
  * @since		3.7.7
  *
  * @author		Helios Ciancio <info@eshiol.it>
  * @link		http://www.eshiol.it
- * @copyright	Copyright (C) 2016, 2017 Helios Ciancio. All Rights Reserved
+ * @copyright	Copyright (C) 2016, 2018 Helios Ciancio. All Rights Reserved
  * @license		http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3
  * J2XML is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -90,7 +90,7 @@
 		<xsl:value-of select="tempiCompletamento/dataInizio"/><xsl:text> </xsl:text><xsl:value-of select="tempiCompletamento/dataUltimazione"/>
 	&lt;/td>
 	&lt;td><xsl:value-of select="sceltaContraente"/>&lt;/td>
-	&lt;td>&lt;h2 class="Accordion-header js-fr-accordion__header fr-accordion__header" id="accordion-header-<xsl:value-of select='generate-id(.)'/>" aria-controls="accordion-panel-<xsl:value-of select='generate-id(.)'/>">&lt;/h2>&lt;/td>
+	&lt;td>&lt;span class="Accordion-header js-fr-accordion__header fr-accordion__header" id="accordion-header-<xsl:value-of select='generate-id(.)'/>"> &lt;/span>&lt;/td>
 &lt;/tr>
 &lt;tr>
 	&lt;td colspan="6" style="padding: 0 0 0 2em!important;">
