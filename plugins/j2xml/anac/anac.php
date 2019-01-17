@@ -1,13 +1,11 @@
 <?php
 /**
- * @version		3.8.1 plugins/j2xml/anac/anac.php
- * 
  * @package		J2XML
  * @subpackage	plg_j2xml_anac
  *
  * @author		Helios Ciancio <info@eshiol.it>
  * @link		http://www.eshiol.it
- * @copyright	Copyright (C) 2016, 2018 Helios Ciancio. All Rights Reserved
+ * @copyright	Copyright (C) 2016 - 2019 Helios Ciancio. All Rights Reserved
  * @license		http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3
  * J2XML is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -25,6 +23,9 @@ jimport('joomla.application.component.helper');
 jimport('joomla.filesystem.file');
 jimport('eshiol.j2xml.version');
 
+/*
+ * @version		3.8.1
+ */
 class plgJ2xmlAnac extends JPlugin
 {
 	/**
@@ -84,7 +85,7 @@ class plgJ2xmlAnac extends JPlugin
 			$error = true;
 		}
 
-		if (version_compare(J2XMLVersion::getShortVersion(), '13.8.3') == -1)
+		if (version_compare(eshiol\J2XML\Version::getShortVersion(), '18.11') == -1)
 		{
 			JLog::add(new JLogEntry(JText::_('PLG_J2XML_ANAC').' '.JText::_('PLG_J2XML_ANAC_MSG_REQUIREMENTS_LIB'), JLog::WARNING, 'plg_j2xml_anac'));
 			$error = true;
