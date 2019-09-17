@@ -3,7 +3,7 @@
  * @package		J2XML
  * @subpackage	plg_j2xml_anac
  *
- * @author		Helios Ciancio <info@eshiol.it>
+ * @author		Helios Ciancio <info (at) eshiol (dot) it>
  * @link		http://www.eshiol.it
  * @copyright	Copyright (C) 2016 - 2019 Helios Ciancio. All Rights Reserved
  * @license		http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3
@@ -17,14 +17,15 @@
 defined('_JEXEC') or die('Restricted access.');
 
 use Joomla\Registry\Registry;
+use eshiol\J2XML\Version;
 
 jimport('joomla.plugin.plugin');
 jimport('joomla.application.component.helper');
 jimport('joomla.filesystem.file');
-jimport('eshiol.j2xml.version');
+jimport('eshiol.j2xml.Version');
 
 /*
- * @version		3.8.1
+ * @version		3.8.2
  */
 class plgJ2xmlAnac extends JPlugin
 {
@@ -85,7 +86,7 @@ class plgJ2xmlAnac extends JPlugin
 			$error = true;
 		}
 
-		if (version_compare(eshiol\J2XML\Version::getShortVersion(), '18.11') == -1)
+		if (version_compare(eshiol\J2xml\Version::getShortVersion(), '19.2') == -1)
 		{
 			JLog::add(new JLogEntry(JText::_('PLG_J2XML_ANAC').' '.JText::_('PLG_J2XML_ANAC_MSG_REQUIREMENTS_LIB'), JLog::WARNING, 'plg_j2xml_anac'));
 			$error = true;
