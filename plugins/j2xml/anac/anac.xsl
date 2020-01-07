@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 /** 
- * @version		3.0.4 plugins/j2xml/anac/anac.xsl
- * 
  * @package		J2XML
  * @subpackage	plg_j2xml_anac
+ * 
+ * @version		3.8.3
  * @since		3.0
  *
  * @author		Helios Ciancio <info@eshiol.it>
  * @link		http://www.eshiol.it
- * @copyright	Copyright (C) 2016 Helios Ciancio. All Rights Reserved
+ * @copyright	Copyright (C) 2016 - 2019 Helios Ciancio. All Rights Reserved
  * @license		http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3
- * J2XML is free software. This version may have been modified pursuant
- * to the GNU General Public License, and as distributed it includes or
- * is derivative of works licensed under the GNU General Public License 
- * or other free or open source software licenses.
+ * J2XML  is free software. This version may have been modified pursuant to the
+ * GNU  General Public License, and as distributed it includes or is derivative
+ * of works licensed under the GNU General Public License or other free or open 
+ * source software licenses.
  */
 -->
 <xsl:stylesheet version="1.0" 
@@ -63,7 +63,7 @@
 	<publish_up>0000-00-00 00:00:00</publish_up>
 	<publish_down>0000-00-00 00:00:00</publish_down>
 	<images><![CDATA[{"image_intro":"","float_intro":"","image_intro_alt":"","image_intro_caption":"","image_fulltext":"","float_fulltext":"","image_fulltext_alt":"","image_fulltext_caption":""}]]></images>
-	<urls><![CDATA[{"urla":null,"urlatext":"","targeta":"","urlb":null,"urlbtext":"","targetb":"","urlc":null,"urlctext":"","targetc":""}]]></urls>
+	<urls><![CDATA[{"urla":null,"urlatext":"dataset","targeta":"","urlb":null,"urlbtext":"","targetb":"","urlc":null,"urlctext":"","targetc":""}]]></urls>
 	<attribs>{}</attribs>
 	<version>1</version>
 	<ordering>0</ordering>
