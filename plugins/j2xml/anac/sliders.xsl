@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 /** 
- * @package		J2XML
- * @subpackage	plg_j2xml_anac
+ * @package     Joomla.Plugins
+ * @subpackage  J2XML.anac
  *
- * @version		3.8.3
+ * @version		3.8.4
  * @since		3.8.2
  *
- * @author		Helios Ciancio <info@eshiol.it>
- * @link		http://www.eshiol.it
- * @copyright	Copyright (C) 2016 - 2019 Helios Ciancio. All Rights Reserved
+ * @author		Helios Ciancio <info (at) eshiol (dot) it>
+ * @link		https://www.eshiol.it
+ * @copyright	Copyright (C) 2016 - 2020 Helios Ciancio. All Rights Reserved
  * @license		http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3
- * J2XML  is free software. This version may have been modified pursuant to the
- * GNU  General Public License, and as distributed it includes or is derivative
- * of works licensed under the GNU General Public License or other free or open 
- * source software licenses.
+ * J2XML is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License 
+ * or other free or open source software licenses.
  */
 -->
 <xsl:stylesheet version="1.0" 

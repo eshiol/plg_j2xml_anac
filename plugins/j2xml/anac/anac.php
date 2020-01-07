@@ -1,11 +1,11 @@
 <?php
 /**
- * @package		J2XML
- * @subpackage	plg_j2xml_anac
+ * @package     Joomla.Plugins
+ * @subpackage  J2XML.anac
  *
  * @author		Helios Ciancio <info (at) eshiol (dot) it>
- * @link		http://www.eshiol.it
- * @copyright	Copyright (C) 2016 - 2019 Helios Ciancio. All Rights Reserved
+ * @link		https://www.eshiol.it
+ * @copyright	Copyright (C) 2016 - 2020 Helios Ciancio. All Rights Reserved
  * @license		http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3
  * J2XML is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
