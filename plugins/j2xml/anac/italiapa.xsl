@@ -55,7 +55,19 @@
 	</introtext>
 	<fulltext/>
 	<state>0</state>
-	<created><xsl:value-of select="legge190:pubblicazione/metadata/dataPubbicazioneDataset"/></created>
+	<created>
+		<xsl:choose>
+			<xsl:when test="legge190:pubblicazione/metadata/dataPubbicazioneDataset">
+				<xsl:value-of select="legge190:pubblicazione/metadata/dataPubbicazioneDataset"/>
+			</xsl:when>
+			<xsl:when test="legge190:pubblicazione/metadata/dataPubblicazioneDataset">
+				<xsl:value-of select="legge190:pubblicazione/metadata/dataPubblicazioneDataset"/>
+			</xsl:when>
+			<xsl:otherwise>
+				0000-00-00 00:00:00
+			</xsl:otherwise>
+		</xsl:choose>
+	</created>
 	<created_by/>
 	<created_by_alias><xsl:value-of select="legge190:pubblicazione/metadata/entePubblicatore"/></created_by_alias>
 	<modified><xsl:value-of select="legge190:pubblicazione/metadata/dataUltimoAggiornamentoDataset"/></modified>
