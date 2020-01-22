@@ -7,7 +7,7 @@
   <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3</license>
   <authorEmail>info@eshiol.it</authorEmail>
   <authorUrl>www.eshiol.it</authorUrl>
-  <version>3.8.4</version>
+  <version>3.8.5</version>
   <description>PLG_J2XML_ANAC_XML_DESCRIPTION</description>
   <updateservers>
     <server type="extension" priority="2" name="ANAC Importer for J2XML">https://www.eshiol.it/files/j2xml37/plg_j2xml_anac.xml</server>

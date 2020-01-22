@@ -4,7 +4,7 @@
  * @package     Joomla.Plugins
  * @subpackage  J2XML.anac
  * 
- * @version		3.8.4
+ * @version		3.8.5
  * @since		3.0
  *
  * @author		Helios Ciancio <info (at) eshiol (dot) it>
@@ -33,8 +33,8 @@
 <content>
 	<id>0</id>
 	<title><xsl:value-of select="/legge190:pubblicazione/metadata/abstract"/></title>
+	<alias><xsl:call-template name="normalize-alias"><xsl:with-param name="s"><xsl:value-of select="/legge190:pubblicazione/metadata/abstract"/></xsl:with-param></xsl:call-template></alias>
 	<catid>uncategorised</catid>
-	<alias><xsl:call-template name="normalize-alias"><xsl:with-param name="s" select="/legge190:pubblicazione/metadata/abstract"></xsl:with-param></xsl:call-template></alias>
 	<introtext>
 &lt;div id="anac_toc">
 &lt;table>
@@ -57,11 +57,11 @@
 	<state>0</state>
 	<created>
 		<xsl:choose>
-			<xsl:when test="legge190:pubblicazione/metadata/dataPubbicazioneDataset">
-				<xsl:value-of select="legge190:pubblicazione/metadata/dataPubbicazioneDataset"/>
+			<xsl:when test="/legge190:pubblicazione/metadata/dataPubbicazioneDataset">
+				<xsl:value-of select="/legge190:pubblicazione/metadata/dataPubbicazioneDataset"/>
 			</xsl:when>
-			<xsl:when test="legge190:pubblicazione/metadata/dataPubblicazioneDataset">
-				<xsl:value-of select="legge190:pubblicazione/metadata/dataPubblicazioneDataset"/>
+			<xsl:when test="/legge190:pubblicazione/metadata/dataPubblicazioneDataset">
+				<xsl:value-of select="/legge190:pubblicazione/metadata/dataPubblicazioneDataset"/>
 			</xsl:when>
 			<xsl:otherwise>
 				0000-00-00 00:00:00
@@ -69,8 +69,8 @@
 		</xsl:choose>
 	</created>
 	<created_by/>
-	<created_by_alias><xsl:value-of select="legge190:pubblicazione/metadata/entePubblicatore"/></created_by_alias>
-	<modified><xsl:value-of select="legge190:pubblicazione/metadata/dataUltimoAggiornamentoDataset"/></modified>
+	<created_by_alias><xsl:value-of select="/legge190:pubblicazione/metadata/entePubblicatore"/></created_by_alias>
+	<modified><xsl:value-of select="/legge190:pubblicazione/metadata/dataUltimoAggiornamentoDataset"/></modified>
 	<modified_by/>
 	<publish_up>0000-00-00 00:00:00</publish_up>
 	<publish_down>0000-00-00 00:00:00</publish_down>

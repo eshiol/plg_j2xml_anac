@@ -25,7 +25,7 @@ jimport('joomla.filesystem.file');
 jimport('eshiol.j2xml.Version');
 
 /*
- * @version		3.8.2
+ * @version		3.8.5
  */
 class plgJ2xmlAnac extends JPlugin
 {
@@ -102,15 +102,27 @@ class plgJ2xmlAnac extends JPlugin
 		if ($error) return false;
 		$namespaces = $xml->getNamespaces(true);
 		if (isset($namespaces['legge190']))
+		{
 			$legge190 = 'legge190';
+		}
 		elseif (isset($namespaces['ns1']))
+		{
 			$legge190 = 'ns1';
+		}
+		elseif (isset($namespaces['ns2']))
+		{
+			$legge190 = 'ns2';
+		}
 		else
+		{
 			return true;
-
+		}
+			
 		$xml->registerXPathNamespace($legge190, $namespaces[$legge190]);
 		if (!$xml->xpath('/'.$legge190.':pubblicazione'))
+		{
 			return true;
+		}
 
 		$xslt = new XSLTProcessor();
 		$xslfile = new DOMDocument();
@@ -120,34 +132,28 @@ class plgJ2xmlAnac extends JPlugin
 		if ($title == 'year')
 		{
 			$xsl = str_replace(
-				'<title><xsl:value-of select="/legge190:pubblicazione/metadata/abstract"/></title>',
-				'<title><xsl:value-of select="/legge190:pubblicazione/metadata/titolo"/>'
+				'<xsl:value-of select="/legge190:pubblicazione/metadata/abstract"/>',
+				'<xsl:value-of select="/legge190:pubblicazione/metadata/titolo"/>'
 					.' anno rif. '
-					.'<xsl:value-of select="/legge190:pubblicazione/metadata/annoRiferimento"/></title>',
+					.'<xsl:value-of select="/legge190:pubblicazione/metadata/annoRiferimento"/>',
 				$xsl
 				);
 		}
 		elseif ($title == 'title')
 		{
 			$xsl = str_replace(
-				'<title><xsl:value-of select="/legge190:pubblicazione/metadata/abstract"/></title>',
-				'<title><xsl:value-of select="/legge190:pubblicazione/metadata/titolo"/></title>',
+				'<xsl:value-of select="/legge190:pubblicazione/metadata/abstract"/>',
+				'<xsl:value-of select="/legge190:pubblicazione/metadata/titolo"/>',
 				$xsl
 				);
 		}
+
 		if ($legge190 != 'legge190')
 		{
-			$xsl = str_replace(
-				'xmlns:legge190="legge190_1_0"',
-				'xmlns:'.$legge190.'="legge190_1_0"',
-				$xsl
-				);
-			$xsl = str_replace(
-				' select="/legge190:pubblicazione/',
-				' select="/'.$legge190.':pubblicazione/',
-				$xsl
-				);
+			$xsl = str_replace('legge190=', $legge190.'=', $xsl);
+			$xsl = str_replace('legge190:', $legge190.':', $xsl);
 		}
+		
 		$catid = $this->params->get('category_id', 2);
 		JLog::add(new JLogEntry('catid: '.$catid, JLOG::DEBUG, 'plg_j2xml_anac'));
 		$categoryTable = JTable::getInstance('Category');
